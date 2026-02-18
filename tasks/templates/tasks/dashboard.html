@@ -1,0 +1,28 @@
+{% extends 'tasks/base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Dashboard</h1>
+</div>
+
+<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:16px;">
+    <div class="card" style="text-align:center;">
+        <h3 style="color:#6b7280; margin:0 0 8px 0; font-size:14px;">Total</h3>
+        <p style="font-size:28px; font-weight:bold; margin:0;">{{ total_tasks }}</p>
+    </div>
+    <div class="card" style="text-align:center;">
+        <h3 style="color:#059669; margin:0 0 8px 0; font-size:14px;">Done</h3>
+        <p style="font-size:28px; font-weight:bold; margin:0; color:#059669;">{{ completed_tasks }}</p>
+    </div>
+    <div class="card" style="text-align:center;">
+        <h3 style="color:#d97706; margin:0 0 8px 0; font-size:14px;">Pending</h3>
+        <p style="font-size:28px; font-weight:bold; margin:0; color:#d97706;">{{ pending_tasks }}</p>
+    </div>
+    <div class="card" style="text-align:center;">
+        <h3 style="color:#2563eb; margin:0 0 8px 0; font-size:14px;">Progress</h3>
+        <p style="font-size:28px; font-weight:bold; margin:0; color:#2563eb;">{{ completion_rate }}%</p>
+    </div>
+</div>
+{% endblock %}

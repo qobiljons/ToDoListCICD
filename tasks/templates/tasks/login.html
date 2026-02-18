@@ -1,0 +1,17 @@
+{% extends 'tasks/base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width:400px; margin:40px auto;">
+    <h1>Login</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div style="margin-top:16px;">
+            <button class="btn btn-primary" type="submit">Sign In</button>
+        </div>
+    </form>
+    <p style="margin-top:16px; font-size:14px;">Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+</div>
+{% endblock %}

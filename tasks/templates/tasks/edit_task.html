@@ -1,0 +1,73 @@
+{% extends 'tasks/base.html' %}
+
+{% block title %}Edit Task{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Edit Task</h1>
+    <form method="post">
+        {% csrf_token %}
+
+        <label for="title">Title</label>
+        <input id="title" name="title" type="text" value="{{ task.title }}" required>
+
+        <label for="description">Description</label>
+        <textarea id="description" name="description" rows="4">{{ task.description }}</textarea>
+
+        <label for="category">Category</label>
+        <select id="category" name="category">
+            <option value="">-- Select category --</option>
+            {% for category in categories %}
+                <option value="{{ category.id }}" {% if task.category and task.category.id == category.id %}selected{% endif %}>
+                    {{ category.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <label for="priority">Priority</label>
+        <select id="priority" name="priority">
+            <option value="0" {% if task.priority == 0 %}selected{% endif %}>Low</option>
+            <option value="1" {% if task.priority == 1 %}selected{% endif %}>Medium</option>
+            <option value="2" {% if task.priority == 2 %}selected{% endif %}>High</option>
+            <option value="3" {% if task.priority == 3 %}selected{% endif %}>Urgent</option>
+        </select>
+
+        <label for="due_date">Due Date</label>
+        <input id="due_date" name="due_date" type="date" value="{% if task.due_date %}{{ task.due_date|date:'Y-m-d' }}{% endif %}">
+
+        <div style="display:flex; align-items:center; gap:8px; margin:16px 0;">
+            <input id="is_completed" name="is_completed" type="checkbox" style="width:auto; margin:0;" {% if task.is_completed %}checked{% endif %}>
+            <label for="is_completed" style="margin:0;">Mark as completed</label>
+        </div>
+
+        <div style="margin-top:16px;">
+            <button class="btn btn-primary" type="submit">Update Task</button>
+            <a class="btn btn-secondary" href="{% url 'dashboard' %}">Cancel</a>
+        </div>
+    </form>
+</div>
+
+<div class="card">
+    <h2>Subtasks</h2>
+    <form method="post" style="display:flex; gap:8px; margin-bottom:16px;">
+        {% csrf_token %}
+        <input name="add_subtask" type="hidden">
+        <input name="subtask_title" type="text" placeholder="Add a subtask" required style="margin-bottom:0;">
+        <button class="btn btn-success" type="submit">Add</button>
+    </form>
+    {% if subtasks %}
+        <ul style="list-style:none; padding:0;">
+            {% for subtask in subtasks %}
+                <li style="display:flex; align-items:center; gap:8px; padding:8px 0; border-bottom:1px solid #e5e7eb;">
+                    <a href="{% url 'toggle_subtask' subtask.id %}" style="text-decoration:none;">
+                        {% if subtask.is_completed %}✅{% else %}⬜{% endif %}
+                    </a>
+                    <span {% if subtask.is_completed %}style="text-decoration:line-through; color:#9ca3af;"{% endif %}>{{ subtask.title }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p style="color:#6b7280;">No subtasks yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

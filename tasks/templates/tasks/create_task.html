@@ -1,0 +1,42 @@
+{% extends 'tasks/base.html' %}
+
+{% block title %}Create Task{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Create Task</h1>
+    <form method="post">
+        {% csrf_token %}
+
+        <label for="title">Title</label>
+        <input id="title" name="title" type="text" required>
+
+        <label for="description">Description</label>
+        <textarea id="description" name="description" rows="4"></textarea>
+
+        <label for="category">Category</label>
+        <select id="category" name="category">
+            <option value="">-- Select category --</option>
+            {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="priority">Priority</label>
+        <select id="priority" name="priority">
+            <option value="0">Low</option>
+            <option value="1">Medium</option>
+            <option value="2">High</option>
+            <option value="3">Urgent</option>
+        </select>
+
+        <label for="due_date">Due Date</label>
+        <input id="due_date" name="due_date" type="date">
+
+        <div style="margin-top:16px;">
+            <button class="btn btn-primary" type="submit">Save Task</button>
+            <a class="btn btn-secondary" href="{% url 'dashboard' %}">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
