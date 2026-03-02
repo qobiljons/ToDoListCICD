@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.http import require_POST
 from .models import Task, Category, SubTask, Tag
 from django.http import HttpResponseRedirect
 
@@ -216,6 +217,16 @@ def delete_task(request, task_id):
         task.delete()
         return redirect("dashboard")
     return render(request, "tasks/delete_task.html", {"task": task})
+
+
+# Mark Task Done
+@login_required
+@require_POST
+def mark_task_done(request, task_id):
+    task = get_object_or_404(Task, id=task_id, user=request.user)
+    task.is_completed = True
+    task.save(update_fields=["is_completed"])
+    return redirect("task_list")
 
 
 # Categories page
