@@ -57,7 +57,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "docker-compose.yml,nginx/nginx.conf"
-          target: /home/azureuser/todolist
+          target: /home/azureuser/ToDoListCICD
 
       - name: Deploy on VM
         uses: appleboy/ssh-action@v1.2.0
@@ -66,7 +66,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /home/azureuser/todolist
+            cd /home/azureuser/ToDoListCICD
             docker compose pull
             docker compose down
             docker compose up -d
