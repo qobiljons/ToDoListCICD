@@ -70,7 +70,6 @@ jobs:
             mkdir -p staticfiles media
             sudo chown -R 100:101 staticfiles media
             docker compose pull --policy always
-            docker compose down
             docker compose up -d --force-recreate
             docker compose exec -T web python manage.py migrate --noinput
             docker compose exec -T web python manage.py collectstatic --noinput
