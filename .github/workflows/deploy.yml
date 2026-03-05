@@ -67,9 +67,9 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /home/azureuser/ToDoListCICD
-            docker compose pull
+            docker compose pull --policy always    
             docker compose down
-            docker compose up -d
+            docker compose up -d --force-recreate  
             docker compose exec -T web python manage.py migrate --noinput
             docker compose exec -T web python manage.py collectstatic --noinput
             docker image prune -f
