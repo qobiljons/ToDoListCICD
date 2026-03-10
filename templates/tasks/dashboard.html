@@ -59,7 +59,7 @@
                                 {% for tag in task.tags.all %}<span class="badge badge-default">{{ tag.name }}</span> {% endfor %}
                             </div>
                         </div>
-                        {% if task.is_completed %}<span class="" style="!important; border-style:  "> Done  </span>{% else %}<span class="">Pending</span>{% endif %}
+                        {% if task.is_completed %}<span class=""> Done  </span>{% else %}<span class="">Pending</span>{% endif %}
                     </li>
                 {% endfor %}
             </ul>
